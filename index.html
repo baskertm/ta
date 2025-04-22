@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>பாஸ்கர் | வணக்கம்! 
-வருக வருக</title>
+  <title>பாஸ்கர் | தமிழ் பாரம்பரிய போர்ட்ஃபோலியோ</title>
   <style>
     body {
       margin: 0;
       font-family: 'Latha', sans-serif;
-      background: url('tanjore-temple.jpg') no-repeat center center fixed;
+      background: url('https://i.ibb.co/Y3xMC2C/tanjore-temple-bg.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       overflow-x: hidden;
@@ -101,83 +100,20 @@
       text-decoration: none;
       margin: 0.2rem 0;
     }
-    .bubble-lang-switch {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  z-index: 1000;
-}
-
-.bubble {
-  width: 50px;
-  height: 50px;
-  background-color: #1e1e1e;
-  color: #00ffcc;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 50px;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 0 8px #00ffcc, 0 0 16px #00ffcc;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.bubble:hover {
-  transform: scale(1.2);
-  background-color: #00ffcc;
-  color: #1e1e1e;
-  box-shadow: 0 0 12px #00ffcc, 0 0 24px #00ffcc;
-}
-    /* Floating social bar */
-.social-bar {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  z-index: 999;
-}
-
-.social-icon {
-  width: 50px;
-  height: 50px;
-  background: #111;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  text-decoration: none;
-  box-shadow: 0 0 10px rgba(0,255,255,0.6);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.social-icon:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 15px rgba(0,255,255,1), 0 0 25px rgba(0,255,255,0.8);
-}
-
-.github { background: #333; }
-.linkedin { background: #0077b5; }
-.mail { background: #e4405f; }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
- <div class="social-bar">
-  <a href="https://github.com/baskertm" class="social-icon github" target="_blank"><i class="fab fa-github"></i></a>
-  <a href="https://linkedin.com/in/yourprofile" class="social-icon linkedin" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-  <a href="mailto:heybaskar+mywebpage@gmail.com" class="social-icon mail"><i class="fas fa-envelope"></i></a>
-</div>
-</body>
+  <div class="overlay"></div>
+  <div class="floating-letters" id="floatingLetters"></div>
+  <div class="social-bar">
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="https://instagram.com" target="_blank">Instagram</a>
+  </div>
+
   <header>
     <h1>பாஸ்கர்</h1>
-    <h2>வணக்கம்!</h2>
+    <h2>தமிழ் பாரம்பரிய இணையதளம்</h2>
   </header>
 
   <section>
@@ -191,16 +127,16 @@
     <h2>எனது திட்டங்கள்</h2>
     <ul>
       <li>AI வழிகாட்டும் இணையதளம்</li>
-      <li>டிஜிட்டல் மார்க்கெட்டிங் </li>
+      <li>டிஜிட்டல் மார்க்கெட்டிங் கம்பெயின்</li>
     </ul>
 
     <h2>பயோடேட்டா பதிவிறக்கம்</h2>
-    <a href="baskar_resume.pdf" download>
-      <button>பயோடேட்டா பதிவிறக்கம்  </button>
+    <a href="your-resume-link.pdf" download>
+      <button>பயோடேட்டா பதிவிறக்கம் செய்ய</button>
     </a>
 
     <h2>தொடர்பு கொள்ளுங்கள்</h2>
-    <form action="https://formspree.io/f/mldbrlwq" method="POST">
+    <form action="https://formspree.io/f/yourformid" method="POST">
       <input type="text" name="name" placeholder="பெயர்" required />
       <input type="email" name="email" placeholder="மின்னஞ்சல்" required />
       <input type="tel" name="phone" placeholder="தொலைபேசி எண்" required />
@@ -230,9 +166,5 @@
     const randomKural = kurals[Math.floor(Math.random() * kurals.length)];
     kuralBox.innerHTML = `<h3>திருக்குறள்</h3><p>${randomKural.replace("\n", "<br>")}</p><p>— திருவள்ளுவர்</p>`;
   </script>
-<!-- Floating Bubble Language Switch -->
-<div class="bubble-lang-switch">
-  <a href="https://baskertm.github.io/cv" class="bubble">EN</a>
-</div>
 </body>
 </html>
