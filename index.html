@@ -166,5 +166,31 @@
     const randomKural = kurals[Math.floor(Math.random() * kurals.length)];
     kuralBox.innerHTML = `<h3>திருக்குறள்</h3><p>${randomKural.replace("\n", "<br>")}</p><p>— திருவள்ளுவர்</p>`;
   </script>
+  <script>
+  // Replace this with your actual Web App URL
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxoW2EwNM5RRqBWynMSfqytOzuVpbQPZpfCYfAm3KVmqtb_-lKE64EWGdXA5AOKMYf1GQ/exec";
+
+  // Collect some info about the visitor
+  const page = window.location.pathname;
+  const device = navigator.userAgent;
+  const browser = navigator.appName;
+
+  // Optional IP lookup (basic fallback using free API)
+  fetch("https://api.ipify.org?format=json")
+    .then(res => res.json())
+    .then(data => {
+      const ip = data.ip;
+
+      // Send info to your Google Sheet
+      fetch(scriptURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `page=${page}&action=visit&device=${encodeURIComponent(device)}&ip=${ip}&browser=${browser}`
+      });
+    });
+</script>
 </body>
 </html>
