@@ -139,17 +139,6 @@
     background: url('frame2.png') center/cover no-repeat;
   }
 
-  .kural-box {
-    padding: 40px 25px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffd700;
-    font-size: 1.2rem;
-    line-height: 2;
-    white-space: pre-line;
-    min-height: 160px;
-    font-family: 'Noto Serif Tamil', serif;
-  }
-
   @keyframes pulse-glow {
     0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
     50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.9); }
@@ -178,23 +167,6 @@
       <button type="submit">அனுப்பவும்</button>
     </form>
   </section>
-
-  const letters = ["அ", "ஆ", "இ", "ஈ", "உ", "ஊ", "எ", "ஏ", "ஐ", "ஒ", "ஓ", "ஔ"];
-const container = document.getElementById('floatingLetters');
-
-for (let i = 0; i < 50; i++) {
-    let span = document.createElement('span');
-    span.textContent = letters[Math.floor(Math.random() * letters.length)];
-    span.style.left = Math.random() * 100 + 'vw';
-    span.style.top = Math.random() * 100 + 'vh';
-    span.style.animationDuration = (5 + Math.random() * 5) + 's';
-    span.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem'; // Different sizes
-    span.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity
-    span.style.transform = `rotate(${Math.random() * 360}deg)`; // Random rotation
-    container.appendChild(span);
-}
-
-    
   <script>
   // Replace this with your actual Web App URL
   const scriptURL = "https://script.google.com/macros/s/AKfycbxoW2EwNM5RRqBWynMSfqytOzuVpbQPZpfCYfAm3KVmqtb_-lKE64EWGdXA5AOKMYf1GQ/exec";
