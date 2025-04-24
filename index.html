@@ -26,8 +26,6 @@
     transform: rotate(0deg); /* Ensure letters are initially upright */
     will-change: transform, opacity; /* Optimize animations */
 }
-  z-index: 2; /* Ensure it is above the floating letters */
-}
     header {
       text-align: center;
       padding: 4rem 1rem 2rem;
@@ -157,48 +155,7 @@
     50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.9); }
   }
 </style>
-
-<h2 style="text-align:center; font-family:'Noto Serif Tamil', serif; color:#fff;">இன்றைய குறள்</h2>
-<div id="frame" class="frame-wrapper frame-style-1">
-  <div class="kural-box" id="kuralText"></div>
-</div>
-
-<script>
-  const kurals = [
-    "அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.",
-    "கற்றதனால் ஆய பயனென்கொல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.",
-    "மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்\nநிலமிசை நீடுவாழ் வார்.",
-    "வேண்டுதல் வேண்டாமை இலானடி சேர்ந்தார்க்கு\nயாண்டும் இடும்பை இல.",
-    "இருள்சேர் இருவினையும் சேரா இறைவன்\nபொருள்சேர் புகழ்புரிந்தார் மாட்டு."
-  ];
-
-  const randomIndex = Math.floor(Math.random() * kurals.length);
-  const randomKural = kurals[randomIndex];
-  const kuralBox = document.getElementById("kuralText");
-
-  let i = 0;
-  function typeLine() {
-    if (i < randomKural.length) {
-      kuralBox.innerText += randomKural.charAt(i);
-      i++;
-      setTimeout(typeLine, 50);
-    }
-  }
-
-  const frame = document.getElementById("frame");
-  if (Math.random() > 0.5) {
-    frame.classList.remove("frame-style-1");
-    frame.classList.add("frame-style-2");
-  }
-
-  typeLine();
-</script>
-  <section>
-    <div class="kural-box" id="kuralBox">
-      <!-- Thirukkural will be inserted here -->
-    </div>
-
-    <h2>என்னைப் பற்றி</h2>
+<h2>என்னைப் பற்றி</h2>
     <p>நான் பாஸ்கர், ஒரு திறமையான டிஜிட்டல் மார்க்கெட்டிங் மற்றும் செயற்கை நுண்ணறிவு ஆர்வலர். பாரம்பரியத்தையும் நவீன தொழில்நுட்பத்தையும் ஒருங்கிணைக்கும் வகையில் என் முயற்சிகளை கொண்டு வருகிறேன்.</p>
 
     <h2>எனது திட்டங்கள்</h2>
