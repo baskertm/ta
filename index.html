@@ -20,8 +20,6 @@
 .floating-letters {
   z-index: 1; /* Ensure floating letters are above the overlay */
 }
-.kural-box {background: rgba(0, 0, 0, 0.8); /* Better contrast for the box */
-  color: #ffd700;
   z-index: 2; /* Ensure it is above the floating letters */
 }
     header {
@@ -65,11 +63,7 @@
       0% { transform: translateY(100vh) rotate(0deg); }
       100% { transform: translateY(-100vh) rotate(360deg); }
     }
-    .kural-box {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
+ 
     }
     form input, form textarea {
       width: 100%;
@@ -119,6 +113,80 @@
     <h2>தமிழ் பக்கம்</h2>
   </header>
 
+<!-- Kural of the Day -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil&display=swap" rel="stylesheet">
+<style>
+  .frame-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 30px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    animation: pulse-glow 6s infinite;
+  }
+
+  .frame-style-1 {
+    background: url('frame1.png') center/cover no-repeat;
+  }
+
+  .frame-style-2 {
+    background: url('frame2.png') center/cover no-repeat;
+  }
+
+  .kural-box {
+    padding: 40px 25px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffd700;
+    font-size: 1.2rem;
+    line-height: 2;
+    white-space: pre-line;
+    min-height: 160px;
+    font-family: 'Noto Serif Tamil', serif;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.9); }
+  }
+</style>
+
+<h2 style="text-align:center; font-family:'Noto Serif Tamil', serif; color:#fff;">இன்றைய குறள்</h2>
+<div id="frame" class="frame-wrapper frame-style-1">
+  <div class="kural-box" id="kuralText"></div>
+</div>
+
+<script>
+  const kurals = [
+    "அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.",
+    "கற்றதனால் ஆய பயனென்கொல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.",
+    "மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்\nநிலமிசை நீடுவாழ் வார்.",
+    "வேண்டுதல் வேண்டாமை இலானடி சேர்ந்தார்க்கு\nயாண்டும் இடும்பை இல.",
+    "இருள்சேர் இருவினையும் சேரா இறைவன்\nபொருள்சேர் புகழ்புரிந்தார் மாட்டு."
+  ];
+
+  const randomIndex = Math.floor(Math.random() * kurals.length);
+  const randomKural = kurals[randomIndex];
+  const kuralBox = document.getElementById("kuralText");
+
+  let i = 0;
+  function typeLine() {
+    if (i < randomKural.length) {
+      kuralBox.innerText += randomKural.charAt(i);
+      i++;
+      setTimeout(typeLine, 50);
+    }
+  }
+
+  const frame = document.getElementById("frame");
+  if (Math.random() > 0.5) {
+    frame.classList.remove("frame-style-1");
+    frame.classList.add("frame-style-2");
+  }
+
+  typeLine();
+</script>
   <section>
     <div class="kural-box" id="kuralBox">
       <!-- Thirukkural will be inserted here -->
@@ -160,22 +228,7 @@
       container.appendChild(span);
     }
 
-    const kurals = [
-      "அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.",
-      "கற்றதனால் ஆய பயனென்கொல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.",
-      "மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்க்கு\nவலர்நிகர் எல்லாம் தளர்நிலை யாமென்று.",
-      "வேண்டுதல் வேண்டாமை இலானடி சேர்ந்தார்க்கு\nயாண்டும் இடும்பை இல",
-  "இருள்சேர் இருவினையும் சேரா இறைவன்\nபொருள்சேர் புகழ்புரிந்தார் மாட்டு",
-  "பொறிவாயில் ஐந்தவித்தான் பொய்தீர் ஒழுக்க\nநெறிநின்றார் நீடுவாழ் வார்.",
-  "தனக்குவமை இல்லாதான் தாள்சேர்ந்தார்க் கல்லால்\nமனக்கவலை மாற்றல் அரிது.",
-  "அறவாழி அந்தணன் தாள்சேர்ந்தார்க் கல்லால்\nபிறவாழி நீந்தல் அரிது",
-  "கோளில் பொறியின் குணமிலவே எண்குணத்தான்\nதாளை வணங்காத் தலை.",
-  "பிறவிப் பெருங்கடல் நீந்துவர் நீந்தார்இறைவன் அடிசேரா தார்.  "
-    ];
-    const kuralBox = document.getElementById('kuralBox');
-    const randomKural = kurals[Math.floor(Math.random() * kurals.length)];
-    kuralBox.innerHTML = `<h3>திருக்குறள்</h3><p>${randomKural.replace("\n", "<br>")}</p><p>— திருவள்ளுவர்</p>`;
-  </script>
+    
   <script>
   // Replace this with your actual Web App URL
   const scriptURL = "https://script.google.com/macros/s/AKfycbxoW2EwNM5RRqBWynMSfqytOzuVpbQPZpfCYfAm3KVmqtb_-lKE64EWGdXA5AOKMYf1GQ/exec";
