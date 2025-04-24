@@ -17,8 +17,14 @@
     .overlay {
   z-index: -1; /* Push the overlay to the background */
 }
-.floating-letters {
-  z-index: 1; /* Ensure floating letters are above the overlay */
+.floating-letters span {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.2; /* Start with a faint appearance */
+    animation: float 10s infinite ease-in-out;
+    color: #ffffff;
+    transform: rotate(0deg); /* Ensure letters are initially upright */
+    will-change: transform, opacity; /* Optimize animations */
 }
   z-index: 2; /* Ensure it is above the floating letters */
 }
@@ -216,17 +222,20 @@
     </form>
   </section>
 
-  <script>
-    const letters = ["அ","ஆ","இ","ஈ","உ","ஊ","எ","ஏ","ஐ","ஒ","ஓ","ஔ"];
-    const container = document.getElementById('floatingLetters');
-    for (let i = 0; i < 50; i++) {
-      let span = document.createElement('span');
-      span.textContent = letters[Math.floor(Math.random() * letters.length)];
-      span.style.left = Math.random() * 100 + 'vw';
-      span.style.top = Math.random() * 100 + 'vh';
-      span.style.animationDuration = (5 + Math.random() * 5) + 's';
-      container.appendChild(span);
-    }
+  const letters = ["அ", "ஆ", "இ", "ஈ", "உ", "ஊ", "எ", "ஏ", "ஐ", "ஒ", "ஓ", "ஔ"];
+const container = document.getElementById('floatingLetters');
+
+for (let i = 0; i < 50; i++) {
+    let span = document.createElement('span');
+    span.textContent = letters[Math.floor(Math.random() * letters.length)];
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.top = Math.random() * 100 + 'vh';
+    span.style.animationDuration = (5 + Math.random() * 5) + 's';
+    span.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem'; // Different sizes
+    span.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity
+    span.style.transform = `rotate(${Math.random() * 360}deg)`; // Random rotation
+    container.appendChild(span);
+}
 
     
   <script>
