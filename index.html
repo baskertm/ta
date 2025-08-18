@@ -1,182 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baskar | Resume</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Curvy Tech Résumé</title>
   <style>
-    /* Reset + Base */
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-    body{background:#0d1117;color:#e6edf3;overflow-x:hidden;}
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #0f172a;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
     /* Curvy Banner */
-    header{
-      position:relative;
-      text-align:center;
-      padding:60px 20px 100px;
-      background:linear-gradient(135deg,#1f3c73,#121a26);
+    header {
+      position: relative;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      text-align: center;
+      padding: 80px 20px 120px;
+      border-bottom-left-radius: 50% 10%;
+      border-bottom-right-radius: 50% 10%;
     }
-    header h1{font-size:2.5rem;margin-bottom:10px;}
-    header p{font-size:1.2rem;opacity:0.85;}
-    header::after{
-      content:"";
-      position:absolute;bottom:0;left:0;width:100%;height:100px;
-      background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230d1117" d="M0,160L60,176C120,192,240,224,360,240C480,256,600,256,720,229.3C840,203,960,149,1080,122.7C1200,96,1320,96,1380,96L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"/></svg>') no-repeat;
-      background-size:cover;
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
     }
-
-    /* Floating dots in banner */
-    .dots{
-      position:absolute;top:0;left:0;width:100%;height:100%;
-      pointer-events:none;overflow:hidden;
-    }
-    .dot{
-      position:absolute;width:6px;height:6px;
-      background:rgba(255,255,255,0.3);border-radius:50%;
-      animation:float 12s linear infinite;
-    }
-    @keyframes float{
-      from{transform:translateY(100vh);}
-      to{transform:translateY(-10vh);}
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
     }
 
-    /* Language Toggle */
-    #langToggle{
-      position:absolute;top:20px;right:20px;
-      padding:6px 14px;border:none;border-radius:25px;
-      background:rgba(255,255,255,0.1);
-      backdrop-filter:blur(6px);
-      color:#fff;font-weight:bold;cursor:pointer;
+    /* Tabs container */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: -60px;
+      gap: 15px;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .tab-btn:hover {
+      transform: translateY(-3px);
+    }
+    .tab-btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+      transition: all 0.5s ease;
+    }
+    .tab-btn:hover::after {
+      left: 100%;
+    }
+    .tab-btn.active {
+      background: rgba(255,255,255,0.25);
     }
 
-    /* Tabs */
-    nav{display:flex;justify-content:center;margin-top:-50px;gap:15px;}
-    .tab-btn{
-      padding:10px 20px;
-      border:none;border-radius:25px;
-      background:rgba(255,255,255,0.05);
-      color:#fff;cursor:pointer;font-size:1rem;
-      backdrop-filter:blur(6px);
-      transition:all .3s;
+    /* Tab content */
+    .tab-content {
+      display: none;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      animation: fadeSlide 0.6s ease;
     }
-    .tab-btn:hover,.tab-btn.active{
-      background:linear-gradient(135deg,#ff6a00,#ee0979);
+    .tab-content.active {
+      display: block;
     }
-
-    /* Sections */
-    section{display:none;padding:60px 20px;text-align:center;min-height:300px;}
-    section.active{display:block;}
-
-    /* Gradient backgrounds per section */
-    #about{background:linear-gradient(135deg,#141e30,#243b55);}
-    #skills{background:linear-gradient(135deg,#42275a,#734b6d);}
-    #experience{background:linear-gradient(135deg,#134e5e,#71b280);}
-    #contact{background:linear-gradient(135deg,#355c7d,#6c5b7b,#c06c84);}
-
-    section h2{font-size:2rem;margin-bottom:20px;}
-
-    /* Language handling */
-    .ta{display:none;}
-    body.lang-ta .en{display:none;}
-    body.lang-ta .ta{display:block;}
+    @keyframes fadeSlide {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
 
     /* Skills bars */
-    .skill{margin:15px auto;width:80%;max-width:600px;text-align:left;}
-    .skill p{margin-bottom:5px;}
-    .bar{height:10px;background:rgba(255,255,255,0.2);border-radius:5px;overflow:hidden;}
-    .bar span{display:block;height:100%;background:#ff6a00;width:0%;transition:width 1.5s ease;}
+    .skill {
+      margin: 15px 0;
+    }
+    .skill-name {
+      margin-bottom: 5px;
+    }
+    .skill-bar {
+      height: 10px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      width: 0;
+      transition: width 1.5s ease;
+    }
 
+    /* Contact buttons */
+    .contact-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .contact-buttons a {
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      font-size: 1.5rem;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .contact-buttons a:hover {
+      transform: scale(1.1);
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Resume Download */
+    .download-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+    .download-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1 class="en">Baskar</h1>
-    <h1 class="ta">பாஸ்கர்</h1>
-    <p class="en">Tech Enthusiast | Developer | Digital Marketer</p>
-    <p class="ta">தொழில்நுட்ப ஆர்வலர் | டெவலப்பர் | டிஜிட்டல் மார்கெட்டர்</p>
-    <button id="langToggle">தமிழ்</button>
-    <div class="dots">
-      <div class="dot" style="left:20%;animation-duration:14s;"></div>
-      <div class="dot" style="left:40%;animation-duration:10s;"></div>
-      <div class="dot" style="left:60%;animation-duration:16s;"></div>
-      <div class="dot" style="left:80%;animation-duration:12s;"></div>
-    </div>
+    <h1>John Doe</h1>
+    <p>Tech Enthusiast • Developer • Designer</p>
   </header>
 
-  <nav>
+  <!-- Tabs -->
+  <div class="tabs">
     <button class="tab-btn active" data-tab="about">About</button>
     <button class="tab-btn" data-tab="skills">Skills</button>
-    <button class="tab-btn" data-tab="experience">Experience</button>
+    <button class="tab-btn" data-tab="projects">Projects</button>
     <button class="tab-btn" data-tab="contact">Contact</button>
-  </nav>
+  </div>
 
-  <section id="about" class="active">
-    <h2 class="en">About Me</h2>
-    <h2 class="ta">என்னை பற்றி</h2>
-    <p class="en">I am passionate about creating digital solutions and exploring modern technologies.</p>
-    <p class="ta">நான் டிஜிட்டல் தீர்வுகளை உருவாக்குவதிலும், புதிய தொழில்நுட்பங்களை ஆராய்வதிலும் ஆர்வம் கொண்டவன்.</p>
-  </section>
+  <!-- Tab Content -->
+  <div id="about" class="tab-content active">
+    <h2>About Me</h2>
+    <p>I am a passionate software engineer with experience in web development and modern UI/UX design.</p>
+    <a href="resume.pdf" class="download-btn" download>Download Résumé</a>
+  </div>
 
-  <section id="skills">
-    <h2 class="en">Skills</h2>
-    <h2 class="ta">திறமைகள்</h2>
+  <div id="skills" class="tab-content">
+    <h2>Skills</h2>
     <div class="skill">
-      <p class="en">Web Development</p><p class="ta">இணைய மேம்பாடு</p>
-      <div class="bar"><span data-level="90"></span></div>
+      <div class="skill-name">HTML / CSS</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
     </div>
     <div class="skill">
-      <p class="en">Digital Marketing</p><p class="ta">டிஜிட்டல் மார்கெட்டிங்</p>
-      <div class="bar"><span data-level="80"></span></div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
     </div>
     <div class="skill">
-      <p class="en">Graphic Design</p><p class="ta">கிராபிக் வடிவமைப்பு</p>
-      <div class="bar"><span data-level="70"></span></div>
+      <div class="skill-name">React</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
     </div>
-  </section>
+  </div>
 
-  <section id="experience">
-    <h2 class="en">Experience</h2>
-    <h2 class="ta">அனுபவம்</h2>
-    <p class="en">Worked on multiple projects involving modern tech stacks and marketing campaigns.</p>
-    <p class="ta">நவீன தொழில்நுட்பங்கள் மற்றும் மார்கெட்டிங் முயற்சிகளில் பல திட்டங்களில் பங்கேற்றேன்.</p>
-  </section>
+  <div id="projects" class="tab-content">
+    <h2>Projects</h2>
+    <p>Coming soon with amazing works!</p>
+  </div>
 
-  <section id="contact">
-    <h2 class="en">Contact</h2>
-    <h2 class="ta">தொடர்பு</h2>
-    <p class="en">Email: baskar@example.com</p>
-    <p class="ta">மின்னஞ்சல்: baskar@example.com</p>
-  </section>
+  <div id="contact" class="tab-content">
+    <h2>Contact Me</h2>
+    <div class="contact-buttons">
+      <a href="mailto:example@mail.com">📧</a>
+      <a href="tel:+911234567890">📞</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">🔗</a>
+    </div>
+  </div>
 
   <script>
-    // Tabs
-    const tabBtns=document.querySelectorAll('.tab-btn');
-    const sections=document.querySelectorAll('section');
-    tabBtns.forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        tabBtns.forEach(b=>b.classList.remove('active'));
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
-        sections.forEach(sec=>sec.classList.remove('active'));
         document.getElementById(btn.dataset.tab).classList.add('active');
-        // Animate skill bars if skills tab
-        if(btn.dataset.tab==="skills"){
-          document.querySelectorAll('#skills .bar span').forEach(span=>{
-            span.style.width=span.dataset.level+"%";
+
+        // Animate skills on open
+        if (btn.dataset.tab === 'skills') {
+          document.querySelectorAll('#skills .skill-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width;
+          });
+        } else {
+          document.querySelectorAll('#skills .skill-fill').forEach(bar => {
+            bar.style.width = '0';
           });
         }
       });
     });
-
-    // Language toggle
-    const langToggle=document.getElementById('langToggle');
-    if(localStorage.getItem("lang")==="ta"){document.body.classList.add("lang-ta");langToggle.textContent="EN";}
-    langToggle.addEventListener("click",()=>{
-      if(document.body.classList.contains("lang-ta")){
-        document.body.classList.remove("lang-ta");localStorage.setItem("lang","en");langToggle.textContent="தமிழ்";
-      }else{
-        document.body.classList.add("lang-ta");localStorage.setItem("lang","ta");langToggle.textContent="EN";
-      }
-    });
   </script>
 </body>
 </html>
+
