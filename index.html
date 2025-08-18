@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Curvy Tech Résumé</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baskar's Resume</title>
   <style>
     body {
       margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #0f172a;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
       color: #fff;
       overflow-x: hidden;
     }
@@ -16,191 +16,161 @@
     /* Curvy Banner */
     header {
       position: relative;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
       text-align: center;
-      padding: 80px 20px 120px;
-      border-bottom-left-radius: 50% 10%;
-      border-bottom-right-radius: 50% 10%;
+      color: white;
+      padding: 4rem 1rem 6rem;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
     }
     header h1 {
-      font-size: 2.5rem;
       margin: 0;
+      font-size: 2.5rem;
     }
     header p {
+      margin: 0.5rem 0 0;
       font-size: 1.2rem;
-      opacity: 0.9;
+    }
+    header svg {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
     }
 
-    /* Tabs container */
+    /* Language Toggle */
+    .lang-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .lang-toggle:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Tabs */
     .tabs {
       display: flex;
       justify-content: center;
-      margin-top: -60px;
-      gap: 15px;
+      margin-top: -3rem;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
     .tab-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 12px 25px;
+      padding: 0.8rem 1.5rem;
       border-radius: 50px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
       cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      transition: background 0.3s, transform 0.3s;
     }
-    .tab-btn:hover {
-      transform: translateY(-3px);
-    }
-    .tab-btn::after {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
-      transition: all 0.5s ease;
-    }
-    .tab-btn:hover::after {
-      left: 100%;
-    }
-    .tab-btn.active {
-      background: rgba(255,255,255,0.25);
+    .tab-btn:hover, .tab-btn.active {
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      transform: translateY(-2px);
     }
 
-    /* Tab content */
+    /* Tab Content */
     .tab-content {
       display: none;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 25px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
       animation: fadeSlide 0.6s ease;
+      border-radius: 20px;
+      margin-top: 2rem;
     }
     .tab-content.active {
       display: block;
     }
+
     @keyframes fadeSlide {
       from {opacity: 0; transform: translateY(20px);}
       to {opacity: 1; transform: translateY(0);}
     }
 
-    /* Skills bars */
-    .skill {
-      margin: 15px 0;
-    }
-    .skill-name {
-      margin-bottom: 5px;
-    }
-    .skill-bar {
-      height: 10px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .skill-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #4facfe, #00f2fe);
-      width: 0;
-      transition: width 1.5s ease;
-    }
-
-    /* Contact buttons */
-    .contact-buttons {
+    /* Action Buttons */
+    .actions {
       display: flex;
-      gap: 20px;
       justify-content: center;
-      margin-top: 20px;
+      gap: 1.2rem;
+      margin: 2rem 0;
     }
-    .contact-buttons a {
-      width: 50px; height: 50px;
-      display: flex; align-items: center; justify-content: center;
+    .action-btn {
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(10px);
-      font-size: 1.5rem;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      font-size: 1.3rem;
+      color: #fff;
     }
-    .contact-buttons a:hover {
+    .action-btn:hover {
+      background: linear-gradient(135deg, #ff512f, #dd2476);
       transform: scale(1.1);
-      background: rgba(255,255,255,0.3);
-    }
-
-    /* Resume Download */
-    .download-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 30px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 50px;
-      color: white;
-      text-decoration: none;
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
-    }
-    .download-btn:hover {
-      background: rgba(255,255,255,0.3);
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header>
-    <h1>John Doe</h1>
-    <p>Tech Enthusiast • Developer • Designer</p>
+    <button class="lang-toggle" onclick="toggleLang()">தமிழ்</button>
+    <h1 data-en="My Resume" data-ta="சுயவிவரம்">My Resume</h1>
+    <p data-en="Welcome to my professional profile" data-ta="என் தொழில்முறை சுயவிவரத்திற்கு வரவேற்கிறேன்">Welcome to my professional profile</p>
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#0f0f0f" d="M0,64L1440,0L1440,120L0,120Z"></path>
+    </svg>
   </header>
 
-  <!-- Tabs -->
   <div class="tabs">
-    <button class="tab-btn active" data-tab="about">About</button>
-    <button class="tab-btn" data-tab="skills">Skills</button>
-    <button class="tab-btn" data-tab="projects">Projects</button>
-    <button class="tab-btn" data-tab="contact">Contact</button>
+    <button class="tab-btn active" data-tab="about" data-en="About" data-ta="என்னை பற்றி">About</button>
+    <button class="tab-btn" data-tab="skills" data-en="Skills" data-ta="திறன்கள்">Skills</button>
+    <button class="tab-btn" data-tab="projects" data-en="Projects" data-ta="திட்டங்கள்">Projects</button>
+    <button class="tab-btn" data-tab="contact" data-en="Contact" data-ta="தொடர்பு">Contact</button>
   </div>
 
-  <!-- Tab Content -->
   <div id="about" class="tab-content active">
-    <h2>About Me</h2>
-    <p>I am a passionate software engineer with experience in web development and modern UI/UX design.</p>
-    <a href="resume.pdf" class="download-btn" download>Download Résumé</a>
+    <h2 data-en="About Me" data-ta="என்னை பற்றி">About Me</h2>
+    <p data-en="I am a passionate professional..." data-ta="நான் ஒரு தொழில்நுட்ப ஆர்வலர், எதிர்காலத் தேவைகளுக்கு ஏற்ப வளரும் திறன்களைக் கொண்டவன், மேலும் எனது திறன்களை தொடர்ந்து மேம்படுத்த எனது நீண்டகால முயற்சியை நான் வழங்குகிறேன்.">I am a passionate tech enthusiast along with demanding skills that grows with the future needs and im giving my prolonged effort to upgrade my skills regularly...</p>
   </div>
 
   <div id="skills" class="tab-content">
-    <h2>Skills</h2>
-    <div class="skill">
-      <div class="skill-name">HTML / CSS</div>
-      <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
-    </div>
-    <div class="skill">
-      <div class="skill-name">JavaScript</div>
-      <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
-    </div>
-    <div class="skill">
-      <div class="skill-name">React</div>
-      <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
-    </div>
+    <h2 data-en="My Skills" data-ta="என் திறன்கள்">My Skills</h2>
+    <p data-en="Cloud Computing, Customer Support, Graphic Designing, and more" data-ta="கிளவுட் கம்ப்யூட்டிங், வாடிக்கையாளர் சேவை, கிராஃபிக் டிசைனிங், மற்றும் பல">HTML, CSS, JavaScript, and more</p>
   </div>
 
   <div id="projects" class="tab-content">
-    <h2>Projects</h2>
-    <p>Coming soon with amazing works!</p>
+    <h2 data-en="Projects" data-ta="திட்டங்கள்">Projects</h2>
+    <p data-en="Here are some of my works..." data-ta="எனது சில படைப்புகள் இங்கே...">Here are some of my works...</p>
   </div>
 
   <div id="contact" class="tab-content">
-    <h2>Contact Me</h2>
-    <div class="contact-buttons">
-      <a href="mailto:example@mail.com">📧</a>
-      <a href="tel:+911234567890">📞</a>
-      <a href="https://linkedin.com/in/yourprofile" target="_blank">🔗</a>
+    <h2 data-en="Contact Me" data-ta="என்னை தொடர்பு கொள்ள">Contact Me</h2>
+    <div class="actions">
+      <a href="resume.pdf" download><button class="action-btn"><i class="fa-solid fa-file-arrow-down"></i></button></a>
+      <a href="mailto:heybaskar+mycvpage@gmail.com"><button class="action-btn"><i class="fa-solid fa-envelope"></i></button></a>
+      <a href="tel:+919080917791"><button class="action-btn"><i class="fa-solid fa-phone"></i></button></a>
+      <a href="https://linkedin.com/in/baskartm" target="_blank"><button class="action-btn"><i class="fa-brands fa-linkedin-in"></i></button></a>
     </div>
   </div>
 
   <script>
-    // Tab switching
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -210,20 +180,23 @@
         tabContents.forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById(btn.dataset.tab).classList.add('active');
-
-        // Animate skills on open
-        if (btn.dataset.tab === 'skills') {
-          document.querySelectorAll('#skills .skill-fill').forEach(bar => {
-            bar.style.width = bar.dataset.width;
-          });
-        } else {
-          document.querySelectorAll('#skills .skill-fill').forEach(bar => {
-            bar.style.width = '0';
-          });
-        }
       });
     });
+
+    // Language toggle
+    let currentLang = localStorage.getItem('lang') || 'en';
+    function applyLang(lang) {
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+      document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'தமிழ்' : 'EN';
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+    }
+    function toggleLang() {
+      applyLang(currentLang === 'en' ? 'ta' : 'en');
+    }
+    applyLang(currentLang);
   </script>
 </body>
 </html>
-
