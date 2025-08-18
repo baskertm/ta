@@ -341,16 +341,10 @@
     link.download = "resume_with_watermark.pdf";
     link.click();
   }
-  <!-- Custom download button -->
-  <div id="controls">
-    <button id="downloadBtn">Download My Resume</button>
-  </div>
-
-  <script>
     document.getElementById("downloadBtn").addEventListener("click", () => {
       // custom download with watermark
       const link = document.createElement("a");
-      link.href = "resume_watermarked.pdf"; // your processed/watermarked version
+      link.href = "Basker's resume.pdf"; // your processed/watermarked version
       link.download = "My_Resume.pdf";
       link.click();
     });
