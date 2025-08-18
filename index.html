@@ -4,7 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Baskar's Resume</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curvy Resume Viewer (PDF.js + Protected + Watermark)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    :root{
+      --bg:#0b0c10; --fg:#ffffff; --glass:rgba(255,255,255,.08);
+      --gradA:#6a11cb; --gradB:#2575fc; --gradC:#ee0979; --gradD:#ff6a00;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:radial-gradient(1200px 600px at 10% -10%, #122, transparent),linear-gradient(135deg,#0b0c10,#111827,#0b0c10);color:var(--fg)}
+
+    /* Floating CTA */
+    .floating-btn{position:fixed;right:22px;bottom:24px;display:inline-flex;align-items:center;gap:.6rem;border:none;border-radius:999px;padding:.9rem 1.2rem;color:#fff;cursor:pointer;z-index:9999;background:linear-gradient(135deg,var(--gradA),var(--gradB));box-shadow:0 14px 36px rgba(0,0,0,.35);animation:btnShift 6s ease-in-out infinite alternate;transition:transform .25s}
+    .floating-btn:hover{transform:translateY(-2px)}
+    @keyframes btnShift{0%{background:linear-gradient(135deg,var(--gradA),var(--gradB))}50%{background:linear-gradient(135deg,var(--gradD),var(--gradC))}100%{background:linear-gradient(135deg,#00c6ff,#0072ff)}}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.76);z-index:9998}
+    .modal.open{display:flex}
+    .modal-card{width:min(1000px,94vw);height:min(88vh,900px);background:rgba(17,24,39,.92);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+    .modal-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(135deg,var(--gradA),var(--gradB));color:#fff}
+    .modal-title{margin:0;font-size:1rem;font-weight:700}
+    .modal-actions{display:flex;gap:8px}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:999px;padding:.5rem .9rem;cursor:pointer;color:#fff;background:rgba(255,255,255,.18)}
+    .btn:hover{background:rgba(255,255,255,.26)}
+    .close-x{border:none;background:transparent;color:#fff;font-size:1.25rem;cursor:pointer}
+    .viewer-wrap{position:relative;flex:1;}
+    .viewer-iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+    /* Anti-select layer (applies inside modal only) */
+    .modal, .modal *{ -webkit-user-select:none; user-select:none; }
+
+    /* Helper text (optional) */
+    .note{position:fixed;left:16px;bottom:16px;opacity:.6;font-size:.85rem}
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -198,6 +233,142 @@
       applyLang(currentLang === 'en' ? 'ta' : 'en');
     }
     applyLang(currentLang);
+  </script>
+  
+  <!-- Floating View Resume Button -->
+  <button class="floating-btn" id="openResume"><i class="fa-solid fa-eye"></i><span>View Resume</span></button>
+
+  <!-- Modal -->
+  <div class="modal" id="resumeModal">
+    <div class="modal-card" id="modalCard">
+      <div class="modal-bar">
+        <h3 class="modal-title">My Resume</h3>
+        <div class="modal-actions">
+          <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Download (Watermark)</span></button>
+          <button class="close-x" id="closeResume"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="viewer-wrap" id="viewerWrap">
+        <!-- PDF.js viewer; same-origin required for full hardening -->
+        <iframe id="pdfViewer" class="viewer-iframe" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">PDF viewer is protected (toolbar hidden). Use the Watermark button to download.</div>
+
+  <!-- pdf-lib for watermarking -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script>
+    const modal = document.getElementById('resumeModal');
+    const openBtn = document.getElementById('openResume');
+    const closeBtn = document.getElementById('closeResume');
+    const pdfFrame = document.getElementById('pdfViewer');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Open modal and load PDF.js viewer
+    openBtn.addEventListener('click', () => {
+      modal.classList.add('open');
+      // IMPORTANT: Ensure this path exists (same-origin): ./pdfjs/web/viewer.html and ./resume.pdf
+      pdfFrame.src = 'pdfjs/web/viewer.html?file=../resume.pdf#disableDownload=true&disablePrint=true&toolbar=0';
+    });
+
+    // Close modal
+    closeBtn.addEventListener('click', () => { modal.classList.remove('open'); pdfFrame.src=''; });
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) { closeBtn.click(); } });
+
+    // Harden the viewer after it loads (same-origin only)
+    pdfFrame.addEventListener('load', () => {
+      try{
+        const doc = pdfFrame.contentDocument;
+        const win = pdfFrame.contentWindow;
+        if(!doc) return;
+        // Force-hide toolbar (extra safety)
+        const style = doc.createElement('style');
+        style.textContent = `#toolbarContainer{display:none!important;} #secondaryToolbar{display:none!important;} .toolbar{display:none!important;}`;
+        doc.head.appendChild(style);
+        // Block context menu and drag
+        const block = ev => { ev.preventDefault(); return false; };
+        ['contextmenu','dragstart','copy','cut','paste'].forEach(evt => {
+          doc.addEventListener(evt, block, {capture:true});
+        });
+        // Block hotkeys inside iframe
+        doc.addEventListener('keydown', (e)=>{
+          const k = (e.key||'').toLowerCase();
+          if ((e.ctrlKey||e.metaKey) && ['s','p','u','c','x','o','a'].includes(k)) { e.preventDefault(); e.stopPropagation(); }
+          if (e.key === 'PrintScreen') { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+        // Block printing hooks
+        if (win) {
+          win.addEventListener('beforeprint', e=>{ e.preventDefault(); });
+          win.print = () => {}; // noop
+        }
+      }catch(err){
+        // If cross-origin, we can't inject protections; ensure pdfjs/ is hosted on same origin
+        console.warn('Viewer hardening limited due to cross-origin:', err);
+      }
+    });
+
+    // Block context menu & hotkeys in modal overlay too
+    const blockAll = (e)=>{
+      const k = (e.key||'').toLowerCase();
+      if (e.type==='contextmenu') { e.preventDefault(); }
+      if (e.type==='keydown' && (e.ctrlKey||e.metaKey) && ['s','p','u','c','x','o','a'].includes(k)) { e.preventDefault(); }
+    };
+    modal.addEventListener('contextmenu', blockAll);
+    window.addEventListener('keydown', (e)=>{ if(modal.classList.contains('open')) blockAll(e); }, true);
+
+    // Custom watermarked download (URL + server time)
+    downloadBtn.addEventListener('click', downloadWatermarkedPDF);
+
+    async function downloadWatermarkedPDF(){
+      try{
+        // 1) Load the source PDF
+        const existingPdfBytes = await fetch('resume.pdf', {cache:'no-store'}).then(r=>r.arrayBuffer());
+
+        // 2) Get server time (fallback to local)
+        let stampLine2 = '';
+        try{
+          const t = await fetch('https://worldtimeapi.org/api/ip', {cache:'no-store'}).then(r=>r.json());
+          // Example: "2025-08-18T10:15:30+05:30" and timezone like "Asia/Kolkata"
+          const iso = t.datetime;
+          const tz = t.timezone || t.abbreviation || '';
+          const dateObj = new Date(iso);
+          stampLine2 = dateObj.toLocaleString(undefined, {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}) + (tz?` (${tz})`: '');
+        } catch{
+          const d = new Date();
+          stampLine2 = d.toLocaleString();
+        }
+
+        const urlLine = `Downloaded from ${window.location.href}`;
+
+        // 3) Watermark all pages
+        const { PDFDocument, rgb } = PDFLib;
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const pages = pdfDoc.getPages();
+        pages.forEach(page => {
+          const { width } = page.getSize();
+          const margin = 18;
+          page.drawText(urlLine, {
+            x: Math.max(margin, width - 280), y: 22, size: 10, color: rgb(0.55,0.55,0.55), opacity: 0.78
+          });
+          page.drawText(stampLine2, {
+            x: Math.max(margin, width - 280), y: 36, size: 10, color: rgb(0.55,0.55,0.55), opacity: 0.78
+          });
+        });
+
+        // 4) Download
+        const out = await pdfDoc.save();
+        const blob = new Blob([out], { type:'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Resume_Watermarked.pdf';
+        document.body.appendChild(a); a.click(); a.remove();
+      }catch(err){
+        console.error(err);
+        alert('Download failed. Ensure resume.pdf is present and accessible.');
+      }
+    }
   </script>
 </body>
 </html>
