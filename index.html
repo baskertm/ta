@@ -107,7 +107,7 @@
       margin: 2rem 0;
     }
     .action-btn {
-      width: 80px;
+      width: 55px;
       height: 55px;
       border-radius: 50%;
       border: none;
@@ -125,52 +125,13 @@
       background: linear-gradient(135deg, #ff512f, #dd2476);
       transform: scale(1.1);
     }
-.resume-modal {
-  border: none;
-  border-radius: 5rem;
-  padding: 1.5rem;
-  max-width: 80%;
-  width: 700px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,240,255,0.9));
-  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-}
-
-.resume-modal::backdrop {
-  background: rgba(0,0,0,0.6);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.close-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.download-btn {
-  margin-top: 1rem;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 1.5rem;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header>
     <button class="lang-toggle" onclick="toggleLang()">தமிழ்</button>
-    <h1 data-en="I'm Baskar" data-ta="நான் பாஸ்கர்.">I'm Baskar</h1>
+    <h1 data-en="I'm Baskar" data-ta="நான் பாஸ்கர்.">My Resume</h1>
     <p data-en="Welcome to my professional profile" data-ta="என் தொழில்முறை சுயவிவரத்திற்கு வரவேற்கிறேன்">Welcome to my professional profile</p>
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
       <path fill="#0f0f0f" d="M0,64L1440,0L1440,120L0,120Z"></path>
@@ -191,43 +152,24 @@
 
   <div id="skills" class="tab-content">
     <h2 data-en="My Skills" data-ta="என் திறன்கள்">My Skills</h2>
-    <p data-en="Cloud Computing, Customer Support, Graphic Designing, and more" data-ta="கிளவுட் கம்ப்யூட்டிங், வாடிக்கையாளர் சேவை, கிராஃபிக் டிசைனிங், மற்றும் பல">HTML, CSS, JavaScript, and more</p>
+      <p data-en="Cloud Computing, Customer Support, Graphic Designing, and more" data-ta="கிளவுட் கம்ப்யூட்டிங், வாடிக்கையாளர் சேவை, கிராஃபிக் டிசைனிங், மற்றும் பல">HTML, CSS, JavaScript, and more</p>
   </div>
 
   <div id="projects" class="tab-content">
     <h2 data-en="Projects" data-ta="திட்டங்கள்">Projects</h2>
     <p data-en="Here are some of my works..." data-ta="எனது சில படைப்புகள் இங்கே...">Here are some of my works...</p>
   </div>
-</button>
+
   <div id="contact" class="tab-content">
     <h2 data-en="Contact Me" data-ta="என்னை தொடர்பு கொள்ள">Contact Me</h2>
     <div class="actions">
       <a href="https://baskertm.github.io/re/" target="_blank"><button class="action-btn"><i class="fa-solid fa-up-right-from-square"></i></button></a>
-      <a href="mailto:heybaskar+ilcv?subject=Job%20Application&body=Hello%20I%20am%20interested%20in%20your%20resume" target="_blank"><button class="action-btn"><i class="fa-solid fa-envelope"></i></button></a>
+      <a href="mailto:heybaskar+mycvpage@gmail.com"><button class="action-btn"><i class="fa-solid fa-envelope"></i></button></a>
       <a href="tel:+919080917791"><button class="action-btn"><i class="fa-solid fa-phone"></i></button></a>
       <a href="sms:+919080917791?body=Hello%20I%20saw%20your%20resume%20online"><button class="action-btn"><i class="fa-solid fa-message"></i></button></a>
       <a href="https://linkedin.com/in/baskartm" target="_blank"><button class="action-btn"><i class="fa-brands fa-linkedin-in"></i></button></a>
     </div>
   </div>
-<!-- View Resume Button -->
-<button class="action-btn" onclick="openResumeModal()">
-  <i class="fa-solid fa-eye"></i> View Resume
-
-<!-- Resume Modal -->
-<dialog id="resumeModal" class="resume-modal">
-  <div class="modal-header">
-    <h2>My Resume</h2>
-    <button onclick="closeResumeModal()" class="close-btn">&times;</button>
-  </div>
-  
-  <!-- PDF Viewer -->
-  <iframe src="resume.pdf" width="100%" height="500px"></iframe>
-
-  <!-- Download Button -->
-  <button class="download-btn" onclick="downloadPDF()">
-    <i class="fa-solid fa-download"></i> Download
-  </button>
-</dialog>
 
   <script>
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -257,47 +199,5 @@
     }
     applyLang(currentLang);
   </script>
-<!-- PDF-lib Library -->
-<script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
-
-<script>
-function openResumeModal() {
-  document.getElementById('resumeModal').showModal();
-}
-
-function closeResumeModal() {
-  document.getElementById('resumeModal').close();
-}
-
-async function downloadWatermarkedPDF() {
-  const url = "resume.pdf";  // Your resume file
-  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
-
-  const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
-  const pages = pdfDoc.getPages();
-  const { height, width } = pages[0].getSize();
-
-  const watermark = window.location.href; // Current page URL
-
-  pages.forEach(page => {
-    page.drawText(`Downloaded from ${watermark}`, {
-      x: width - 350,
-      y: 20,
-      size: 12,
-      color: PDFLib.rgb(0.6, 0.6, 0.6),
-      opacity: 0.7,
-    });
-  });
-
-  const pdfBytes = await pdfDoc.save();
-
-  // Trigger download
-  const blob = new Blob([pdfBytes], { type: "application/pdf" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "resume_with_watermark.pdf";
-  link.click();
-}
-</script>
 </body>
 </html>
