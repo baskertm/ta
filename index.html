@@ -125,6 +125,45 @@
       background: linear-gradient(135deg, #ff512f, #dd2476);
       transform: scale(1.1);
     }
+    .resume-modal {
+  border: none;
+  border-radius: 2rem;
+  padding: 1.5rem;
+  max-width: 80%;
+  width: 700px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,240,255,0.9));
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+
+.resume-modal::backdrop {
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.download-btn {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -170,6 +209,26 @@
       <a href="https://linkedin.com/in/baskartm" target="_blank"><button class="action-btn"><i class="fa-brands fa-linkedin-in"></i></button></a>
     </div>
   </div>
+<!-- View Resume Button -->
+<button class="action-btn" onclick="openResumeModal()">
+  <i class="fa-solid fa-eye"></i> View Resume
+</button>
+
+<!-- Resume Modal -->
+<dialog id="resumeModal" class="resume-modal">
+  <div class="modal-header">
+    <h2>My Resume</h2>
+    <button onclick="closeResumeModal()" class="close-btn">&times;</button>
+  </div>
+  
+  <!-- PDF Viewer -->
+  <iframe src="resume.pdf" width="100%" height="500px"></iframe>
+
+  <!-- Download Button -->
+  <button class="download-btn" onclick="downloadWatermarkedPDF()">
+    <i class="fa-solid fa-download"></i> Download with Watermark
+  </button>
+</dialog>
 
   <script>
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -199,5 +258,47 @@
     }
     applyLang(currentLang);
   </script>
+<!-- PDF-lib Library -->
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+
+<script>
+function openResumeModal() {
+  document.getElementById('resumeModal').showModal();
+}
+
+function closeResumeModal() {
+  document.getElementById('resumeModal').close();
+}
+
+async function downloadWatermarkedPDF() {
+  const url = "resume.pdf";  // Your resume file
+  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
+
+  const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+  const pages = pdfDoc.getPages();
+  const { height, width } = pages[0].getSize();
+
+  const watermark = window.location.href; // Current page URL
+
+  pages.forEach(page => {
+    page.drawText(`Downloaded from ${watermark}`, {
+      x: width - 350,
+      y: 20,
+      size: 12,
+      color: PDFLib.rgb(0.6, 0.6, 0.6),
+      opacity: 0.7,
+    });
+  });
+
+  const pdfBytes = await pdfDoc.save();
+
+  // Trigger download
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "resume_with_watermark.pdf";
+  link.click();
+}
+</script>
 </body>
 </html>
