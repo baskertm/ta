@@ -1,170 +1,182 @@
-
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>பாஸ்கர் | வணக்கம்</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baskar | Resume</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Latha', sans-serif;
-      background: url('tanjore-temple.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      overflow-x: hidden;
+    /* Reset + Base */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+    body{background:#0d1117;color:#e6edf3;overflow-x:hidden;}
+
+    /* Curvy Banner */
+    header{
+      position:relative;
+      text-align:center;
+      padding:60px 20px 100px;
+      background:linear-gradient(135deg,#1f3c73,#121a26);
     }
-    .overlay {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 0;
+    header h1{font-size:2.5rem;margin-bottom:10px;}
+    header p{font-size:1.2rem;opacity:0.85;}
+    header::after{
+      content:"";
+      position:absolute;bottom:0;left:0;width:100%;height:100px;
+      background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230d1117" d="M0,160L60,176C120,192,240,224,360,240C480,256,600,256,720,229.3C840,203,960,149,1080,122.7C1200,96,1320,96,1380,96L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"/></svg>') no-repeat;
+      background-size:cover;
     }
-    header {
-      text-align: center;
-      padding: 4rem 1rem 2rem;
-      z-index: 1;
-      position: relative;
+
+    /* Floating dots in banner */
+    .dots{
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      pointer-events:none;overflow:hidden;
     }
-    h1 {
-      font-size: 3rem;
-      color: #00ffcc;
+    .dot{
+      position:absolute;width:6px;height:6px;
+      background:rgba(255,255,255,0.3);border-radius:50%;
+      animation:float 12s linear infinite;
     }
-    h2 {
-      font-size: 2rem;
-      color: #ffd700;
+    @keyframes float{
+      from{transform:translateY(100vh);}
+      to{transform:translateY(-10vh);}
     }
-    section {
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-      position: relative;
-      z-index: 1;
+
+    /* Language Toggle */
+    #langToggle{
+      position:absolute;top:20px;right:20px;
+      padding:6px 14px;border:none;border-radius:25px;
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(6px);
+      color:#fff;font-weight:bold;cursor:pointer;
     }
-    .floating-letters {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 0;
+
+    /* Tabs */
+    nav{display:flex;justify-content:center;margin-top:-50px;gap:15px;}
+    .tab-btn{
+      padding:10px 20px;
+      border:none;border-radius:25px;
+      background:rgba(255,255,255,0.05);
+      color:#fff;cursor:pointer;font-size:1rem;
+      backdrop-filter:blur(6px);
+      transition:all .3s;
     }
-    .floating-letters span {
-      position: absolute;
-      font-size: 2rem;
-      opacity: 0.3;
-      animation: float 10s infinite ease-in-out;
-      color: #ffffff;
+    .tab-btn:hover,.tab-btn.active{
+      background:linear-gradient(135deg,#ff6a00,#ee0979);
     }
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); }
-      100% { transform: translateY(-100vh) rotate(360deg); }
-    }
-    .kural-box {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: none;
-      border-radius: 5px;
-    }
-    form button {
-      padding: 0.8rem 1.2rem;
-      background: #00ffcc;
-      border: none;
-      color: #000;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .social-bar {
-      position: fixed;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      z-index: 2;
-    }
-    .social-bar a {
-      background: #222;
-      color: #fff;
-      padding: 0.5rem;
-      text-align: center;
-      text-decoration: none;
-      margin: 0.2rem 0;
-    }
+
+    /* Sections */
+    section{display:none;padding:60px 20px;text-align:center;min-height:300px;}
+    section.active{display:block;}
+
+    /* Gradient backgrounds per section */
+    #about{background:linear-gradient(135deg,#141e30,#243b55);}
+    #skills{background:linear-gradient(135deg,#42275a,#734b6d);}
+    #experience{background:linear-gradient(135deg,#134e5e,#71b280);}
+    #contact{background:linear-gradient(135deg,#355c7d,#6c5b7b,#c06c84);}
+
+    section h2{font-size:2rem;margin-bottom:20px;}
+
+    /* Language handling */
+    .ta{display:none;}
+    body.lang-ta .en{display:none;}
+    body.lang-ta .ta{display:block;}
+
+    /* Skills bars */
+    .skill{margin:15px auto;width:80%;max-width:600px;text-align:left;}
+    .skill p{margin-bottom:5px;}
+    .bar{height:10px;background:rgba(255,255,255,0.2);border-radius:5px;overflow:hidden;}
+    .bar span{display:block;height:100%;background:#ff6a00;width:0%;transition:width 1.5s ease;}
+
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="floating-letters" id="floatingLetters"></div>
-  <div class="social-bubbles">
-    <a href="https://github.com" target="_blank">GitHub</a>
-    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-    <a href="https://instagram.com" target="_blank">X</a>
-  </div>
-
   <header>
-    <h1>பாஸ்கர்</h1>
-    <h2>தமிழ் பக்கம்</h2>
+    <h1 class="en">Baskar</h1>
+    <h1 class="ta">பாஸ்கர்</h1>
+    <p class="en">Tech Enthusiast | Developer | Digital Marketer</p>
+    <p class="ta">தொழில்நுட்ப ஆர்வலர் | டெவலப்பர் | டிஜிட்டல் மார்கெட்டர்</p>
+    <button id="langToggle">தமிழ்</button>
+    <div class="dots">
+      <div class="dot" style="left:20%;animation-duration:14s;"></div>
+      <div class="dot" style="left:40%;animation-duration:10s;"></div>
+      <div class="dot" style="left:60%;animation-duration:16s;"></div>
+      <div class="dot" style="left:80%;animation-duration:12s;"></div>
+    </div>
   </header>
 
-  <section>
-    <div class="kural-box" id="kuralBox">
-      <!-- Thirukkural will be inserted here -->
+  <nav>
+    <button class="tab-btn active" data-tab="about">About</button>
+    <button class="tab-btn" data-tab="skills">Skills</button>
+    <button class="tab-btn" data-tab="experience">Experience</button>
+    <button class="tab-btn" data-tab="contact">Contact</button>
+  </nav>
+
+  <section id="about" class="active">
+    <h2 class="en">About Me</h2>
+    <h2 class="ta">என்னை பற்றி</h2>
+    <p class="en">I am passionate about creating digital solutions and exploring modern technologies.</p>
+    <p class="ta">நான் டிஜிட்டல் தீர்வுகளை உருவாக்குவதிலும், புதிய தொழில்நுட்பங்களை ஆராய்வதிலும் ஆர்வம் கொண்டவன்.</p>
+  </section>
+
+  <section id="skills">
+    <h2 class="en">Skills</h2>
+    <h2 class="ta">திறமைகள்</h2>
+    <div class="skill">
+      <p class="en">Web Development</p><p class="ta">இணைய மேம்பாடு</p>
+      <div class="bar"><span data-level="90"></span></div>
     </div>
+    <div class="skill">
+      <p class="en">Digital Marketing</p><p class="ta">டிஜிட்டல் மார்கெட்டிங்</p>
+      <div class="bar"><span data-level="80"></span></div>
+    </div>
+    <div class="skill">
+      <p class="en">Graphic Design</p><p class="ta">கிராபிக் வடிவமைப்பு</p>
+      <div class="bar"><span data-level="70"></span></div>
+    </div>
+  </section>
 
-    <h2>என்னைப் பற்றி</h2>
-    <p>நான் பாஸ்கர், ஒரு திறமையான டிஜிட்டல் மார்க்கெட்டிங் மற்றும் செயற்கை நுண்ணறிவு ஆர்வலர். பாரம்பரியத்தையும் நவீன தொழில்நுட்பத்தையும் ஒருங்கிணைக்கும் வகையில் என் முயற்சிகளை கொண்டு வருகிறேன்.</p>
+  <section id="experience">
+    <h2 class="en">Experience</h2>
+    <h2 class="ta">அனுபவம்</h2>
+    <p class="en">Worked on multiple projects involving modern tech stacks and marketing campaigns.</p>
+    <p class="ta">நவீன தொழில்நுட்பங்கள் மற்றும் மார்கெட்டிங் முயற்சிகளில் பல திட்டங்களில் பங்கேற்றேன்.</p>
+  </section>
 
-    <h2>எனது திட்டங்கள்</h2>
-    <ul>
-      <li>AI வழிகாட்டும் இணையதளம்</li>
-      <li>டிஜிட்டல் மார்க்கெட்டிங் கம்பெயின்</li>
-    </ul>
-
-    <h2>பயோடேட்டா பதிவிறக்கம்</h2>
-    <a onclick='window.location.href="https://baskertm.github.io/re";' download>
-      <button>பயோடேட்டா பதிவிறக்கம் செய்ய</button>
-    </a>
-
-    <h2>தொடர்பு கொள்ளுங்கள்</h2>
-    <form action="https://formspree.io/f/yourformid" method="POST">
-      <input type="text" name="name" placeholder="பெயர்" required />
-      <input type="email" name="email" placeholder="மின்னஞ்சல்" required />
-      <input type="tel" name="phone" placeholder="தொலைபேசி எண்" required />
-      <textarea name="message" placeholder="தகவல்..." rows="4" required></textarea>
-      <button type="submit">அனுப்பவும்</button>
-    </form>
+  <section id="contact">
+    <h2 class="en">Contact</h2>
+    <h2 class="ta">தொடர்பு</h2>
+    <p class="en">Email: baskar@example.com</p>
+    <p class="ta">மின்னஞ்சல்: baskar@example.com</p>
   </section>
 
   <script>
-    const letters = ["அ","ஆ","இ","ஈ","உ","ஊ","எ","ஏ","ஐ","ஒ","ஓ","ஔ"];
-    const container = document.getElementById('floatingLetters');
-    for (let i = 0; i < 50; i++) {
-      let span = document.createElement('span');
-      span.textContent = letters[Math.floor(Math.random() * letters.length)];
-      span.style.left = Math.random() * 100 + 'vw';
-      span.style.top = Math.random() * 100 + 'vh';
-      span.style.animationDuration = (5 + Math.random() * 5) + 's';
-      container.appendChild(span);
-    }
+    // Tabs
+    const tabBtns=document.querySelectorAll('.tab-btn');
+    const sections=document.querySelectorAll('section');
+    tabBtns.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        tabBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        sections.forEach(sec=>sec.classList.remove('active'));
+        document.getElementById(btn.dataset.tab).classList.add('active');
+        // Animate skill bars if skills tab
+        if(btn.dataset.tab==="skills"){
+          document.querySelectorAll('#skills .bar span').forEach(span=>{
+            span.style.width=span.dataset.level+"%";
+          });
+        }
+      });
+    });
 
-    const kurals = [
-      "அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.",
-      "கற்றதனால் ஆய பயனென்கொல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.",
-      "மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்க்கு\nவலர்நிகர் எல்லாம் தளர்நிலை யாமென்று."
-    ];
-    const kuralBox = document.getElementById('kuralBox');
-    const randomKural = kurals[Math.floor(Math.random() * kurals.length)];
-    kuralBox.innerHTML = `<h3>திருக்குறள்</h3><p>${randomKural.replace("\n", "<br>")}</p><p>— திருவள்ளுவர்</p>`;
+    // Language toggle
+    const langToggle=document.getElementById('langToggle');
+    if(localStorage.getItem("lang")==="ta"){document.body.classList.add("lang-ta");langToggle.textContent="EN";}
+    langToggle.addEventListener("click",()=>{
+      if(document.body.classList.contains("lang-ta")){
+        document.body.classList.remove("lang-ta");localStorage.setItem("lang","en");langToggle.textContent="தமிழ்";
+      }else{
+        document.body.classList.add("lang-ta");localStorage.setItem("lang","ta");langToggle.textContent="EN";
+      }
+    });
   </script>
 </body>
 </html>
