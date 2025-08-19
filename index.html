@@ -241,7 +241,7 @@
       <div class="modal-bar">
         <h3 class="modal-title">My Resume</h3>
         <div class="modal-actions">
-          <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Download (Watermark)</span></button>
+          <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Download My Resume</span></button>
           <button class="close-x" id="closeResume"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
@@ -252,7 +252,7 @@
     </div>
   </div>
 
-  <div class="note">PDF viewer is protected (toolbar hidden). Use the Watermark button to download.</div>
+  <div class="note">V 1.5.</div>
 
   <!-- pdf-lib for watermarking -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
@@ -316,9 +316,9 @@
     window.addEventListener('keydown', (e)=>{ if(modal.classList.contains('open')) blockAll(e); }, true);
 
     // Custom watermarked download (URL + server time)
-    downloadBtn.addEventListener('click', downloadWatermarkedPDF);
+    downloadBtn.addEventListener('click', downloadResumePDF);
 
-    async function downloadWatermarkedPDF(){
+    async function downloadResumePDF(){
       try{
         // 1) Load the source PDF
         const existingPdfBytes = await fetch('resume.pdf', {cache:'no-store'}).then(r=>r.arrayBuffer());
@@ -359,7 +359,7 @@
         const blob = new Blob([out], { type:'application/pdf' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'Resume_Watermarked.pdf';
+        a.download = 'baskar's Resume.pdf';
         document.body.appendChild(a); a.click(); a.remove();
       }catch(err){
         console.error(err);
