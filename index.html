@@ -316,9 +316,9 @@
     window.addEventListener('keydown', (e)=>{ if(modal.classList.contains('open')) blockAll(e); }, true);
 
     // Custom watermarked download (URL + server time)
-    downloadBtn.addEventListener('click', downloadWatermarkedPDF);
+    downloadBtn.addEventListener('click', Download My Resume );
 
-    async function downloadWatermarkedPDF(){
+    async function Download My Resume (){
       try{
         // 1) Load the source PDF
         const existingPdfBytes = await fetch('resume.pdf', {cache:'no-store'}).then(r=>r.arrayBuffer());
