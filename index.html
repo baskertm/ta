@@ -266,7 +266,7 @@
     // Open modal and load PDF.js viewer
     openBtn.addEventListener('click', () => {
       modal.classList.add('open');
-      // IMPORTANT: Ensure this path exists (same-origin): ./pdfjs/web/viewer.html and ./resume.pdf
+      // IMPORTANT: Ensure this path exists (same-origin): ./pdfjs/web/viewer.html and ./https://docs.google.com/document/d/1QmsiS4rUBT9I16962OwApnowZlVjaplF7xpAAjWjdg8/preview
       pdfFrame.src = 'pdfjs/web/viewer.html?file=../"https://docs.google.com/document/d/1QmsiS4rUBT9I16962OwApnowZlVjaplF7xpAAjWjdg8/preview"#disableDownload=true&disablePrint=true&toolbar=0';
     });
 
@@ -321,7 +321,7 @@
     async function downloadWatermarkedPDF(){
       try{
         // 1) Load the source PDF
-        const existingPdfBytes = await fetch('resume.pdf', {cache:'no-store'}).then(r=>r.arrayBuffer());
+        const existingPdfBytes = await fetch('https://docs.google.com/document/d/1QmsiS4rUBT9I16962OwApnowZlVjaplF7xpAAjWjdg8/preview', {cache:'no-store'}).then(r=>r.arrayBuffer());
 
         // 2) Get server time (fallback to local)
         let stampLine2 = '';
@@ -363,7 +363,7 @@
         document.body.appendChild(a); a.click(); a.remove();
       }catch(err){
         console.error(err);
-        alert('Download failed. Ensure resume.pdf is present and accessible.');
+        alert('Download failed. Ensure https://docs.google.com/document/d/1QmsiS4rUBT9I16962OwApnowZlVjaplF7xpAAjWjdg8/preview is present and accessible.');
       }
     }
   </script>
