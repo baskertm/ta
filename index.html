@@ -113,7 +113,6 @@
 
     /* Tab Content */
     .tab-content {
-</div>
       display: none;
       padding: 2rem;
       max-width: 900px;
@@ -242,7 +241,7 @@
       <div class="modal-bar">
         <h3 class="modal-title">My Resume</h3>
         <div class="modal-actions">
-          <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Download My Resume </span></button>
+          <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Download (Watermark)</span></button>
           <button class="close-x" id="closeResume"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
@@ -253,7 +252,7 @@
     </div>
   </div>
 
-  <div class="note">V 1.5.</div>
+  <div class="note">PDF viewer is protected (toolbar hidden). Use the Watermark button to download.</div>
 
   <!-- pdf-lib for watermarking -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
@@ -268,7 +267,7 @@
     openBtn.addEventListener('click', () => {
       modal.classList.add('open');
       // IMPORTANT: Ensure this path exists (same-origin): ./pdfjs/web/viewer.html and ./resume.pdf
-      pdfFrame.src = 'pdfjs/web/viewer.html?file=../"resume.pdf"#disableDownload=true&disablePrint=true&toolbar=0';
+      pdfFrame.src = 'pdfjs/web/viewer.html?file=../resume.pdf#disableDownload=true&disablePrint=true&toolbar=0';
     });
 
     // Close modal
