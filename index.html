@@ -247,7 +247,7 @@
       </div>
       <div class="viewer-wrap" id="viewerWrap">
         <!-- PDF.js viewer; same-origin required for full hardening -->
-        <iframe id="pdfViewer" class="viewer-iframe" referrerpolicy="no-referrer"></iframe>
+        <iframe id="pdfjs/web/viewer.html?file=../../resume.pdf" class="viewer-iframe" referrerpolicy="no-referrer"></iframe>
       </div>
     </div>
   </div>
@@ -260,7 +260,7 @@
     const modal = document.getElementById('resumeModal');
     const openBtn = document.getElementById('openResume');
     const closeBtn = document.getElementById('closeResume');
-    const pdfFrame = document.getElementById('pdfViewer');
+    const pdfFrame = document.getElementById('pdfjs/web/viewer.html?file=../../resume.pdf');
     const downloadBtn = document.getElementById('downloadBtn');
 
     // Open modal and load PDF.js viewer
