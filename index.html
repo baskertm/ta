@@ -243,7 +243,8 @@
       <div class="modal-bar">
         <h3 class="modal-title">My Resume</h3>
         <div class="modal-actions">
-          <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Directly Download My Resume</span></button>
+          <button class="btn lang" id="shareBtn" data-en="Share My Resume" data-ta="என் ரெஸ்யூமே பகிரவும்"><i class="fa-solid fa-share-nodes"></i><span>Share My Resume</span></button>
+          <button class="btn lang" id="downloadBtn" data-en="Directly Download My Resume" data-ta="என் ரெஸ்யூமே நேரடியாக பதிவிறக்கவும்"><i class="fa-solid fa-download"></i><span>Directly Download My Resume</span></button>
           <button class="close-x" id="closeResume"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
@@ -369,5 +370,45 @@
       }
     }
   </script>
+  <script>
+  // Web Share API
+  document.getElementById("shareBtn").addEventListener("click", async () => {
+    let shareTitle = document.getElementById("shareBtn").getAttribute("data-en");
+    let shareText  = "Check out my resume!";
+    let resumeURL  = "https://yourdomain.com/resume.pdf"; // update with actual hosted resume
+
+    if (document.body.classList.contains("ta")) { 
+      // if Tamil mode is active
+      shareTitle = document.getElementById("shareBtn").getAttribute("data-ta");
+      shareText  = "என் ரெஸ்யூமே பார்க்கவும்!";
+    }
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: resumeURL
+        });
+      } catch (err) {
+        console.log("Share canceled:", err);
+      }
+    } else {
+      alert("Sharing not supported on this device.\nPlease copy the link: " + resumeURL);
+    }
+  });
+
+  // Language Switcher Logic (example)
+  function switchLanguage(lang) {
+    document.querySelectorAll(".lang").forEach(el => {
+      el.querySelector("span").innerText = el.getAttribute("data-" + lang);
+    });
+    document.body.classList.toggle("ta", lang === "ta"); // mark Tamil active
+  }
+
+  // Example usage:
+  // switchLanguage("en"); // English
+  // switchLanguage("ta"); // Tamil
+</script>
 </body>
 </html>
