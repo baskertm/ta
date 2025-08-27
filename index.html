@@ -15,8 +15,46 @@
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:radial-gradient(1200px 600px at 10% -10%, #122, transparent),linear-gradient(135deg,#0b0c10,#111827,#0b0c10);color:var(--fg)}
 
     /* Floating CTA */
-    .floating-btn{position:fixed;right:22px;bottom:24px;display:inline-flex;align-items:center;gap:.6rem;border:none;border-radius:999px;padding:.9rem 1.2rem;color:#fff;cursor:pointer;z-index:9999;background:linear-gradient(135deg,var(--gradA),var(--gradB));box-shadow:0 14px 36px rgba(0,0,0,.35);animation:btnShift 6s ease-in-out infinite alternate;transition:transform .25s}
-    .floating-btn:hover{transform:translateY(-2px)}
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      padding: 15px;
+    }
+    .popup iframe {
+      width: 100%;
+      height: 90%;
+      border: none;
+    }
+    .popup button {
+      margin-top: 10px;
+      background: #2575fc;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
     @keyframes btnShift{0%{background:linear-gradient(135deg,var(--gradA),var(--gradB))}50%{background:linear-gradient(135deg,var(--gradD),var(--gradC))}100%{background:linear-gradient(135deg,#00c6ff,#0072ff)}}
 
     /* Modal */
@@ -367,5 +405,11 @@
       }
     }
   </script>
+  <button class="floating-btn" onclick="openResume()">📄 View My Resume</button>
+
+  <div class="popup" id="resumePopup">
+    <iframe src="resume.pdf"></iframe>
+    <button onclick="downloadWatermarked()">⬇ Download with Watermark</button>
+  </div>
 </body>
 </html>
