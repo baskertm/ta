@@ -30,7 +30,7 @@
     .btn:hover{background:rgba(255,255,255,.26)}
     .close-x{border:none;background:transparent;color:#fff;font-size:1.25rem;cursor:pointer}
     .viewer-wrap{position:relative;flex:1;}
-    .viewer-iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .viewer-frame{position:absolute;inset:0;width:100%;height:100%;border:0}
 
     /* Anti-select layer (applies inside modal only) */
     .modal, .modal *{ -webkit-user-select:none; user-select:none; }
@@ -247,7 +247,7 @@
       </div>
       <div class="viewer-wrap" id="viewerWrap">
         <!-- PDF.js viewer; same-origin required for full hardening -->
-        <iframe src="https://baskertm.github.io/re" class="viewer-iframe" referrerpolicy="no-referrer"></iframe>
+        <frame id="pdfViewer" class="viewer-frame" referrerpolicy="no-referrer"></frame>
       </div>
     </div>
   </div>
@@ -289,7 +289,7 @@
         ['contextmenu','dragstart','copy','cut','paste'].forEach(evt => {
           doc.addEventListener(evt, block, {capture:true});
         });
-        // Block hotkeys inside iframe
+        // Block hotkeys inside frame
         doc.addEventListener('keydown', (e)=>{
           const k = (e.key||'').toLowerCase();
           if ((e.ctrlKey||e.metaKey) && ['s','p','u','c','x','o','a'].includes(k)) { e.preventDefault(); e.stopPropagation(); }
