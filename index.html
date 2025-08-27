@@ -229,7 +229,8 @@
     function toggleLang() {
       applyLang(currentLang === 'en' ? 'ta' : 'en');
     }
-    applyLang(currentLang);document.getElementById("shareBtn").addEventListener("click", async () => {
+    applyLang(currentLang);
+    document.getElementById("shareBtn").addEventListener("click", async () => {
     if (navigator.share) {
       try {
         await navigator.share({
@@ -241,7 +242,7 @@
         console.log("Share canceled:", err);
       }
     } else {
-      alert("Sharing not supported on this device. Please copy the link: https://yourdomain.com/resume.pdf");
+      alert("Sharing not supported on this device. Please copy the link: https://baskertm.github.com/ta/resume.pdf");
     }
   });
   </script>
