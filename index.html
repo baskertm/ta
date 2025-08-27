@@ -229,7 +229,21 @@
     function toggleLang() {
       applyLang(currentLang === 'en' ? 'ta' : 'en');
     }
-    applyLang(currentLang);
+    applyLang(currentLang);document.getElementById("shareBtn").addEventListener("click", async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "My Resume",
+          text: "Check out my resume!",
+          url: "https://baskertm.github.com/ta/resume.pdf" // change to your hosted resume link
+        });
+      } catch (err) {
+        console.log("Share canceled:", err);
+      }
+    } else {
+      alert("Sharing not supported on this device. Please copy the link: https://yourdomain.com/resume.pdf");
+    }
+  });
   </script>
   
   <!-- Floating View Resume Button -->
@@ -241,6 +255,7 @@
       <div class="modal-bar">
         <h3 class="modal-title">My Resume</h3>
         <div class="modal-actions">
+          <button class="btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i><span>Share Resume</span></button>
           <button class="btn" id="downloadBtn"><i class="fa-solid fa-download"></i><span>Directly Download My Resume</span></button>
           <button class="close-x" id="closeResume"><i class="fa-solid fa-xmark"></i></button>
         </div>
